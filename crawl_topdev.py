@@ -1,3 +1,5 @@
+#Author: github.com/hoangluu18
+
 import requests
 from prettytable import PrettyTable
 from bs4 import BeautifulSoup
@@ -29,14 +31,29 @@ def get_data_topdev(url):
 
             location_element = job_element.find('div', class_="text-gray-500")
             location = location_element.p.text.strip() if location_element else ""
+
+            link_element = job_element.find('a', class_='text-lg font-bold transition-all text-primary')
+            link = link_element['href'] if link_element else ""
             
+            time_element = job_element.find('p',class_= 'whitespace-nowrap text-sm text-gray-400')
+            time = time_element.text.strip() if time_element else ""
+            
+            #Xử lí link
+            if(link.startswith('/en/')):
+                link = "https://topdev.vn/" + link[4:]
+            
+            #Xử lí thời gian
+            if(time.startswith('Posted')):
+                time = time[7:]
+
             #Xử lí dữ liệu
-            if(title == "" or company == "" or location == "" or level == ""):
+            if(title == "" or company == "" or location == ""):
                 
                 continue   
             text += "----------------------------------\n"
-            text += "Tiêu đề: " + title + "\n" + "Tên công ty: " + company + "\n" + "Địa điểm: " + location + "\n" + "Trình độ: " + level + "\n\n"
+            text += "Tiêu đề: " + title + "\n" + "Tên công ty: " + company + "\n" + "Địa điểm: " + location + "\n" + "Trình độ: " + level + "\n" + "Link: " + link + "\n" + "Thời gian đăng: " + time + "\n\n"
             text += "----------------------------------\n"
+        
         return text
     else:
         return None
