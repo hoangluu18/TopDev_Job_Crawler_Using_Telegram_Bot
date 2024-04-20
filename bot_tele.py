@@ -1,3 +1,5 @@
+#Author: github.com/hoangluu18
+
 from telegram import Bot
 from telegram.ext import Updater, CommandHandler
 import crawl_topdev
@@ -40,7 +42,9 @@ def get_jobs(update, context):
         update.message.reply_text("Có lỗi xảy ra khi lấy dữ liệu từ TopDev")
     else:
         
-        update.message.reply_text(jobs_data)
+        # Chia nhỏ nếu dữ liệu quá dài
+        for i in range(0, len(jobs_data), 4096):
+            update.message.reply_text(jobs_data[i:i+4096])
         
 
 # Function chính để thiết lập bot
