@@ -12,11 +12,9 @@ def get_data_topdev(url):
         # Tìm tất cả các thẻ div chứa thông tin công việc
         job_elements = soup.find_all('div', class_='flex-1')
 
-        # Tạo bảng để lưu dữ liệu
-        
-        #jobs_data = PrettyTable()
-        #jobs_data.field_names = ["Tiêu đề", "Tên công ty", "Địa điểm", "Trình độ"]
+        #Khởi tạo chuỗi lưu trữ dữ liệu
         text = "" 
+
         # Duyệt qua từng phần tử công việc
         for job_element in job_elements:
             # Trích xuất thông tin từ từng phần tử
@@ -36,9 +34,6 @@ def get_data_topdev(url):
             if(title == "" or company == "" or location == "" or level == ""):
                 
                 continue   
-            #jobs_data.add_row([title, company, location, level])  
-            #text = jobs_data.get_string()
-            #print(text)
             text += "----------------------------------\n"
             text += "Tiêu đề: " + title + "\n" + "Tên công ty: " + company + "\n" + "Địa điểm: " + location + "\n" + "Trình độ: " + level + "\n\n"
             text += "----------------------------------\n"
